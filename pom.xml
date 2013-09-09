@@ -5,7 +5,7 @@
     <groupId>storm</groupId>
     <artifactId>storm-kafka-0.8-plus</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>storm-kafka-0.8-plus</name>
     <description>Storm module for kafka &gt; 0.8</description>
     <scm>
@@ -31,6 +31,16 @@
         </testResources>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>
+        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
     </build>
     <repositories>
         <repository>
@@ -75,11 +85,6 @@
         </repository>
     </repositories>
     <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>2.9.2</version>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -130,8 +135,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.9.2</artifactId>
+            <groupId>com.sksamuel.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
             <version>0.8.0-beta1</version>
             <exclusions>
                 <exclusion>
@@ -161,6 +166,11 @@
             <artifactId>clojure</artifactId>
             <version>1.4.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
         </dependency>
     </dependencies>
 </project>
