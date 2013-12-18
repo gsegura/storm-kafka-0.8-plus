@@ -104,6 +104,9 @@ public class TridentKafkaEmitter {
 		ByteBufferMessageSet msgs;
 		try {
 			msgs = fetchMessages(consumer, partition, offset);
+			if(LOG.isDebugEnabled() && msgs.iterator().hasNext()){
+				LOG.debug("nextoffset: " + offset);
+			}
 		} catch (Exception e) {
 			if (e instanceof ConnectException) {
 				throw new FailedFetchException(e);
@@ -172,6 +175,9 @@ public class TridentKafkaEmitter {
 				_config.scheme.deserialize(Utils.toByteArray(msg.payload()));
 		if (values != null) {
 			for (List<Object> value : values) {
+				if(LOG.isDebugEnabled()){
+					LOG.debug(value.toString());
+				}
 				collector.emit(value);
 			}
 		}

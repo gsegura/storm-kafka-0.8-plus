@@ -4,6 +4,7 @@ import backtype.storm.metric.api.IMetric;
 import kafka.api.PartitionOffsetRequestInfo;
 import kafka.common.TopicAndPartition;
 import kafka.javaapi.OffsetRequest;
+import kafka.javaapi.OffsetResponse;
 import kafka.javaapi.consumer.SimpleConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,13 @@ public class KafkaUtils {
 		OffsetRequest request = new OffsetRequest(
 				requestInfo, kafka.api.OffsetRequest.CurrentVersion(), consumer.clientId());
 
-		long[] offsets = consumer.getOffsetsBefore(request).offsets(topic, partition);
+		OffsetResponse response = consumer.getOffsetsBefore(request);
+		if (response.hasError()) {
+			LOG.error("Error fetching data Offset Data the Broker. Reason: " + response.errorCode(topic, partition) );
+			return NO_OFFSET;
+		}
+        
+		long[] offsets = response.offsets(topic, partition);
 		if ( offsets.length > 0) {
 			return offsets[0];
 		} else {
